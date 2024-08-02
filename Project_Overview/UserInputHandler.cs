@@ -86,7 +86,7 @@
             if (keepRunning)
             {
                 Console.WriteLine("\nNhấn phím bất kỳ để tiếp tục...");
-                Console.ReadKey(); // Dừng lại để người dùng nhìn thấy kết quả trước khi xóa màn hình
+                Console.ReadKey();
             }
         }
     }
@@ -157,67 +157,141 @@
 
     private void HandleBorrowBook()
     {
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║              Ngày Mượn Sách                ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-
-        Console.Write("Nhập Id Sách cần mượn: ");
-        Guid bookIdToBorrow = Guid.Parse(Console.ReadLine()!);
-        Console.Write("Nhập Id Thành viên: ");
-        Guid memberIdToBorrow = Guid.Parse(Console.ReadLine()!);
-
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                 Xác Nhận                   ║");
-        Console.WriteLine("╠════════════════════════════════════════════╣");
-        Console.WriteLine("║ 1. Lưu                                     ║");
-        Console.WriteLine("║ 2. Hủy                                     ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-        Console.Write("Lựa chọn của bạn: ");
-        string saveOption = Console.ReadLine()!;
-
-        if (saveOption == "1")
+        while (true)
         {
-            _libraryService.BorrowBook(bookIdToBorrow, memberIdToBorrow);
-            Console.WriteLine("Mượn Sách thành công.");
-        }
-        else
-        {
-            Console.WriteLine("Hủy bỏ thao tác.");
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║              Ngày Mượn Sách                ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+
+            Console.Write("Nhập Id Sách cần mượn: ");
+            if (!Guid.TryParse(Console.ReadLine(), out Guid bookIdToBorrow))
+            {
+                Console.WriteLine("Id Sách không đúng. Bạn có muốn nhập lại?");
+                Console.WriteLine("1. Đồng ý");
+                Console.WriteLine("2. Hủy");
+                Console.Write("Lựa chọn của bạn: ");
+                string retryOption = Console.ReadLine()!;
+
+                if (retryOption == "1")
+                {
+                    continue;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            Console.Write("Nhập Id Thành viên: ");
+            if (!Guid.TryParse(Console.ReadLine(), out Guid memberIdToBorrow))
+            {
+                Console.WriteLine("Id Thành viên không đúng. Bạn có muốn nhập lại?");
+                Console.WriteLine("1. Đồng ý");
+                Console.WriteLine("2. Hủy");
+                Console.Write("Lựa chọn của bạn: ");
+                string retryOption = Console.ReadLine()!;
+
+                if (retryOption == "1")
+                {
+                    continue;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║                 Xác Nhận                   ║");
+            Console.WriteLine("╠════════════════════════════════════════════╣");
+            Console.WriteLine("║ 1. Lưu                                     ║");
+            Console.WriteLine("║ 2. Hủy                                     ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+            Console.Write("Lựa chọn của bạn: ");
+            string saveOption = Console.ReadLine()!;
+
+            if (saveOption == "1")
+            {
+                _libraryService.BorrowBook(bookIdToBorrow, memberIdToBorrow);
+                Console.WriteLine("Mượn Sách thành công.");
+            }
+            else
+            {
+                Console.WriteLine("Hủy bỏ thao tác.");
+            }
+            return;
         }
     }
 
     private void HandleReturnBook()
     {
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                Ngày Trả Sách               ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-
-        Console.Write("Nhập Id Sách cần trả: ");
-        Guid bookIdToReturn = Guid.Parse(Console.ReadLine()!);
-        Console.Write("Nhập Id Thành viên: ");
-        Guid memberIdToReturn = Guid.Parse(Console.ReadLine()!);
-
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                 Xác Nhận                   ║");
-        Console.WriteLine("╠════════════════════════════════════════════╣");
-        Console.WriteLine("║ 1. Lưu                                     ║");
-        Console.WriteLine("║ 2. Hủy                                     ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-        Console.Write("Lựa chọn của bạn: ");
-        string saveOption = Console.ReadLine()!;
-
-        if (saveOption == "1")
+        while (true)
         {
-            _libraryService.ReturnBook(bookIdToReturn, memberIdToReturn);
-            Console.WriteLine("Trả Sách thành công.");
-        }
-        else
-        {
-            Console.WriteLine("Hủy bỏ thao tác.");
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║                Ngày Trả Sách               ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+
+            Console.Write("Nhập Id Sách cần trả: ");
+            if (!Guid.TryParse(Console.ReadLine(), out Guid bookIdToReturn))
+            {
+                Console.WriteLine("Id Sách không đúng. Bạn có muốn nhập lại?");
+                Console.WriteLine("1. Đồng ý");
+                Console.WriteLine("2. Hủy");
+                Console.Write("Lựa chọn của bạn: ");
+                string retryOption = Console.ReadLine()!;
+
+                if (retryOption == "1")
+                {
+                    continue;
+                }
+                else
+                {    
+                    return;
+                }
+            }
+
+            Console.Write("Nhập Id Thành viên: ");
+            if (!Guid.TryParse(Console.ReadLine(), out Guid memberIdToReturn))
+            {
+                Console.WriteLine("Id Thành viên không đúng. Bạn có muốn nhập lại?");
+                Console.WriteLine("1. Đồng ý");
+                Console.WriteLine("2. Hủy");
+                Console.Write("Lựa chọn của bạn: ");
+                string retryOption = Console.ReadLine()!;
+
+                if (retryOption == "1")
+                {
+                    continue;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║                 Xác Nhận                   ║");
+            Console.WriteLine("╠════════════════════════════════════════════╣");
+            Console.WriteLine("║ 1. Lưu                                     ║");
+            Console.WriteLine("║ 2. Hủy                                     ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+            Console.Write("Lựa chọn của bạn: ");
+            string saveOption = Console.ReadLine()!;
+
+            if (saveOption == "1")
+            {
+                _libraryService.ReturnBook(bookIdToReturn, memberIdToReturn);
+                Console.WriteLine("Trả Sách thành công.");
+            }
+            else
+            {
+                Console.WriteLine("Hủy bỏ thao tác.");
+            }
+            return;
         }
     }
 
@@ -265,106 +339,166 @@
         Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
         Console.WriteLine("║                                                                Tất cả Giao dịch                                                                     ║");
         Console.WriteLine("╠═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
-        Console.WriteLine("║   ID                                 │ ID Sách                          │ ID Thành viên                    │ Ngày mượn        │ Ngày trả            ║");
+        Console.WriteLine("║   ID                                 │ ID Sách                              │ ID Thành viên                        │ Ngày mượn        │ Ngày trả    ║");
         Console.WriteLine("╠═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
 
         foreach (var t in allTransactions)
         {
-            Console.WriteLine($"║ {t.Id,-36} │ {t.BookId,-36} │ {t.MemberId,-36} │ {t.BorrowDate.ToShortDateString(),-15} │ {(t.ReturnDate.HasValue ? t.ReturnDate.Value.ToShortDateString() : "N/A"),-13}║");
+            Console.WriteLine($"║ {t.Id,-36} │ {t.BookId,-36} │ {t.MemberId,-32} │ {t.BorrowDate.ToShortDateString(),-16} │ {(t.ReturnDate.HasValue ? t.ReturnDate.Value.ToShortDateString() : "N/A"),-12}║");
         }
         Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
     }
 
     private void HandleDeleteBook()
     {
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                Xóa Sách                    ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-
-        Console.Write("Nhập Id Sách cần xóa: ");
-        Guid bookIdToDelete = Guid.Parse(Console.ReadLine()!);
-
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                 Xác Nhận                   ║");
-        Console.WriteLine("╠════════════════════════════════════════════╣");
-        Console.WriteLine("║ 1. Lưu                                     ║");
-        Console.WriteLine("║ 2. Hủy                                     ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-        Console.Write("Lựa chọn của bạn: ");
-        string saveOption = Console.ReadLine()!;
-
-        if (saveOption == "1")
+        while (true)
         {
-            _libraryService.DeleteBook(bookIdToDelete);
-            Console.WriteLine("Xóa Sách thành công.");
-        }
-        else
-        {
-            Console.WriteLine("Hủy bỏ thao tác.");
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║                Xóa Sách                    ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+
+            Console.Write("Nhập Id Sách cần xóa: ");
+            if (!Guid.TryParse(Console.ReadLine(), out Guid bookIdToDelete))
+            {
+                Console.WriteLine("Id Sách không đúng. Bạn có muốn nhập lại?");
+                Console.WriteLine("1. Đồng ý");
+                Console.WriteLine("2. Hủy");
+                Console.Write("Lựa chọn của bạn: ");
+                string retryOption = Console.ReadLine()!;
+
+                if (retryOption == "1")
+                {
+                    continue;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║                 Xác Nhận                   ║");
+            Console.WriteLine("╠════════════════════════════════════════════╣");
+            Console.WriteLine("║ 1. Lưu                                     ║");
+            Console.WriteLine("║ 2. Hủy                                     ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+            Console.Write("Lựa chọn của bạn: ");
+            string saveOption = Console.ReadLine()!;
+
+            if (saveOption == "1")
+            {
+                _libraryService.DeleteBook(bookIdToDelete);
+                Console.WriteLine("Xóa Sách thành công.");
+            }
+            else
+            {
+                Console.WriteLine("Hủy bỏ thao tác.");
+            }
+            return;
         }
     }
 
     private void HandleDeleteMember()
     {
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║              Xóa Thành Viên                ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-
-        Console.Write("Nhập Id Thành viên cần xóa: ");
-        Guid memberIdToDelete = Guid.Parse(Console.ReadLine()!);
-
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                 Xác Nhận                   ║");
-        Console.WriteLine("╠════════════════════════════════════════════╣");
-        Console.WriteLine("║ 1. Lưu                                     ║");
-        Console.WriteLine("║ 2. Hủy                                     ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-        Console.Write("Lựa chọn của bạn: ");
-        string saveOption = Console.ReadLine()!;
-
-        if (saveOption == "1")
+        while (true)
         {
-            _libraryService.DeleteMember(memberIdToDelete);
-            Console.WriteLine("Xóa Thành viên thành công.");
-        }
-        else
-        {
-            Console.WriteLine("Hủy bỏ thao tác.");
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║              Xóa Thành Viên                ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+
+            Console.Write("Nhập Id Thành viên cần xóa: ");
+            if (!Guid.TryParse(Console.ReadLine(), out Guid memberIdToDelete))
+            {
+                Console.WriteLine("Id Thành viên không đúng. Bạn có muốn nhập lại?");
+                Console.WriteLine("1. Đồng ý");
+                Console.WriteLine("2. Hủy");
+                Console.Write("Lựa chọn của bạn: ");
+                string retryOption = Console.ReadLine()!;
+
+                if (retryOption == "1")
+                {
+                    continue;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║                 Xác Nhận                   ║");
+            Console.WriteLine("╠════════════════════════════════════════════╣");
+            Console.WriteLine("║ 1. Lưu                                     ║");
+            Console.WriteLine("║ 2. Hủy                                     ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+            Console.Write("Lựa chọn của bạn: ");
+            string saveOption = Console.ReadLine()!;
+
+            if (saveOption == "1")
+            {
+                _libraryService.DeleteMember(memberIdToDelete);
+                Console.WriteLine("Xóa Thành viên thành công.");
+            }
+            else
+            {
+                Console.WriteLine("Hủy bỏ thao tác.");
+            }
+            return;
         }
     }
 
     private void HandleDeleteTransaction()
     {
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║              Xóa Giao Dịch                 ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-
-        Console.Write("Nhập Id Giao dịch cần xóa: ");
-        Guid transactionIdToDelete = Guid.Parse(Console.ReadLine()!);
-
-        Console.Clear();
-        Console.WriteLine("╔════════════════════════════════════════════╗");
-        Console.WriteLine("║                 Xác Nhận                   ║");
-        Console.WriteLine("╠════════════════════════════════════════════╣");
-        Console.WriteLine("║ 1. Lưu                                     ║");
-        Console.WriteLine("║ 2. Hủy                                     ║");
-        Console.WriteLine("╚════════════════════════════════════════════╝");
-        Console.Write("Lựa chọn của bạn: ");
-        string saveOption = Console.ReadLine()!;
-
-        if (saveOption == "1")
+        while (true)
         {
-            _libraryService.DeleteTransaction(transactionIdToDelete);
-            Console.WriteLine("Xóa Giao dịch thành công.");
-        }
-        else
-        {
-            Console.WriteLine("Hủy bỏ thao tác.");
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║              Xóa Giao Dịch                 ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+
+            Console.Write("Nhập Id Giao dịch cần xóa: ");
+            if (!Guid.TryParse(Console.ReadLine(), out Guid transactionIdToDelete))
+            {
+                Console.WriteLine("Id Giao dịch không đúng. Bạn có muốn nhập lại?");
+                Console.WriteLine("1. Đồng ý");
+                Console.WriteLine("2. Hủy");
+                Console.Write("Lựa chọn của bạn: ");
+                string retryOption = Console.ReadLine()!;
+
+                if (retryOption == "1")
+                {
+                    continue;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║                 Xác Nhận                   ║");
+            Console.WriteLine("╠════════════════════════════════════════════╣");
+            Console.WriteLine("║ 1. Lưu                                     ║");
+            Console.WriteLine("║ 2. Hủy                                     ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+            Console.Write("Lựa chọn của bạn: ");
+            string saveOption = Console.ReadLine()!;
+
+            if (saveOption == "1")
+            {
+                _libraryService.DeleteTransaction(transactionIdToDelete);
+                Console.WriteLine("Xóa Giao dịch thành công.");
+            }
+            else
+            {
+                Console.WriteLine("Hủy bỏ thao tác.");
+            }
+            return;
         }
     }
 }
